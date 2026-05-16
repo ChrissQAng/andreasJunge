@@ -1,0 +1,23 @@
+# dependencies
+node_modules/
+
+# next.js
+.next/
+
+# payload
+local.db
+local.db-shm
+local.db-wal
+
+# media uploads
+/media
+
+# env
+.env
+.env.local
+
+# build
+dist/
+
+# OS
+.DS_Store

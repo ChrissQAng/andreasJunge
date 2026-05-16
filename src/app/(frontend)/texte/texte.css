@@ -1,0 +1,22 @@
+.texte {
+  padding: var(--spacing-lg) var(--spacing-md);
+  max-width: 720px;
+}
+
+.texte__heading {
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-bottom: var(--spacing-md);
+  letter-spacing: -0.01em;
+}
+
+.texte__content p {
+  margin-bottom: var(--spacing-sm);
+  line-height: 1.7;
+}
+
+.texte__content h2 {
+  font-size: 1.125rem;
+  font-weight: 500;
+  margin: var(--spacing-md) 0 var(--spacing-xs);
+}

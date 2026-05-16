@@ -1,0 +1,92 @@
+.artwork-grid__filters {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.artwork-grid__filter-label {
+  font-size: 0.75rem;
+  color: var(--color-gray-500);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.artwork-grid__filter-btn {
+  font-size: 0.8125rem;
+  padding: 0.25rem 0.75rem;
+  border: 1px solid var(--color-black);
+  background: var(--color-white);
+  color: var(--color-black);
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.artwork-grid__filter-btn:hover,
+.artwork-grid__filter-btn--active {
+  background: var(--color-black);
+  color: var(--color-white);
+  text-decoration: none;
+}
+
+.artwork-grid__empty {
+  color: var(--color-gray-500);
+}
+
+.artwork-grid__list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.artwork-tile__image-wrap {
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: var(--color-gray-100);
+}
+
+.artwork-tile__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.artwork-tile__placeholder {
+  width: 100%;
+  height: 100%;
+  background: var(--color-gray-200);
+}
+
+.artwork-tile__info {
+  margin-top: var(--spacing-xs);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--spacing-xs);
+}
+
+.artwork-tile__caption {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.artwork-tile__title {
+  font-size: 0.875rem;
+  line-height: 1.3;
+}
+
+.artwork-tile__number {
+  font-size: 0.75rem;
+  color: var(--color-gray-500);
+}
+
+.artwork-tile__contact {
+  font-size: 0.75rem;
+  white-space: nowrap;
+  text-decoration: underline;
+  color: var(--color-gray-700);
+  flex-shrink: 0;
+}

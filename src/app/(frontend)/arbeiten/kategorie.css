@@ -1,0 +1,10 @@
+.kategorie {
+  padding: var(--spacing-lg) var(--spacing-md);
+}
+
+.kategorie__heading {
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-bottom: var(--spacing-lg);
+  letter-spacing: -0.01em;
+}
