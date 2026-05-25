@@ -15,7 +15,7 @@ export default function DatenschutzPage() {
           <h2 className="legal__subheading">1. Verantwortlicher</h2>
           <p>
             Verantwortlicher im Sinne der DSGVO ist:<br />
-            Andreas Junge<br />
+            Gundolf Roy<br />
             E-Mail:{' '}
             <a href="mailto:goodomen@outlook.de" className="legal__link">
               goodomen@outlook.de

@@ -14,7 +14,7 @@ export default function ImpressumPage() {
         <section className="legal__section">
           <h2 className="legal__subheading">Angaben gemäß § 5 TMG</h2>
           <p>
-            Andreas Junge<br />
+            Gundolf Roy<br />
             [Straße und Hausnummer]<br />
             [PLZ Ort]<br />
             Deutschland
@@ -34,7 +34,7 @@ export default function ImpressumPage() {
         <section className="legal__section">
           <h2 className="legal__subheading">Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h2>
           <p>
-            Andreas Junge<br />
+            Gundolf Roy<br />
             [Straße und Hausnummer]<br />
             [PLZ Ort]
           </p>
