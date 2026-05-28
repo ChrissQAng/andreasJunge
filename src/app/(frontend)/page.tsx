@@ -40,7 +40,6 @@ export default function HomePage() {
       <div className="hero__overlay">
         <div className="hero__title-wrap">
           <h1 className="hero__name">Andreas<br />Junge</h1>
-          <p className="hero__subtitle">Bildender Künstler</p>
         </div>
       </div>
     </section>
