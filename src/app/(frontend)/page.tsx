@@ -1,6 +1,11 @@
+import { getPayload } from 'payload'
+import config from '@payload-config'
+import type { Media } from '@/payload-types'
 import './home.css'
 
-const HERO_IMAGES = [
+export const revalidate = 60
+
+const STATIC_HERO_IMAGES = [
   { src: '/assets/images/Andreas Junge-0001C-d1feb3ce.jpg', alt: 'Andreas Junge – Werk' },
   { src: '/assets/images/Junge6-7ef0d4e1.jpg', alt: 'Andreas Junge – Werk' },
   { src: '/assets/images/94P093-f9f7bf02.jpg', alt: 'Andreas Junge – Werk' },
@@ -11,16 +16,35 @@ const HERO_IMAGES = [
   { src: '/assets/images/Junge11-c2a5af5b.jpg', alt: 'Andreas Junge – Werk' },
 ]
 
-export default function HomePage() {
+export default async function HomePage() {
+  const payload = await getPayload({ config })
+  const { docs: exhibitions } = await payload.find({
+    collection: 'exhibitions',
+    where: { showInSlideshow: { equals: true } },
+    depth: 1,
+    limit: 20,
+  })
+
+  const slideshowImages = [
+    ...STATIC_HERO_IMAGES,
+    ...exhibitions
+      .map((ex) => {
+        const img = ex.image as Media | null
+        if (!img?.url) return null
+        return { src: img.url, alt: ex.title }
+      })
+      .filter((img): img is { src: string; alt: string } => img !== null),
+  ]
+
   return (
     <section className="hero" aria-label="Werkauswahl">
       <div
         className="hero__slideshow"
-        style={{ '--slide-count': HERO_IMAGES.length } as React.CSSProperties}
+        style={{ '--slide-count': slideshowImages.length } as React.CSSProperties}
         role="img"
         aria-label="Diashow der Werke von Andreas Junge"
       >
-        {HERO_IMAGES.map((img, i) => (
+        {slideshowImages.map((img, i) => (
           <div
             key={img.src}
             className="hero__slide"

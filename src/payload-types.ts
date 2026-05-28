@@ -217,6 +217,10 @@ export interface Exhibition {
   location?: string | null;
   link?: string | null;
   image?: (number | null) | Media;
+  /**
+   * Bild dieser Ausstellung in die Diashow auf der Startseite integrieren
+   */
+  showInSlideshow?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -389,6 +393,7 @@ export interface ExhibitionsSelect<T extends boolean = true> {
   location?: T;
   link?: T;
   image?: T;
+  showInSlideshow?: T;
   updatedAt?: T;
   createdAt?: T;
 }
