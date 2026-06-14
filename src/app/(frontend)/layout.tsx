@@ -21,8 +21,8 @@ export default function FrontendLayout({ children }: { children: React.ReactNode
         <footer className="site-footer">
           <div className="container site-footer__inner">
             <span className="site-footer__contact">
-              <a href="mailto:goodomen@outlook.de" className="site-footer__email">
-                goodomen@outlook.de
+              <a href="mailto:gallerie@gallerieroy.de" className="site-footer__email">
+                gallerie@gallerieroy.de
               </a>
             </span>
             <nav aria-label="Rechtliches" className="site-footer__legal">

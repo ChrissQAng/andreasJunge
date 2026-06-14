@@ -57,7 +57,7 @@
 
 - [x] Navigation (Links: Biographie · Arbeiten · Texte · Ausstellungen)
 - [x] Artwork-Kachel: Platzhalter-Bild, Bildunterschrift (Titel + Nummer), Kontakt-Button
-  - Kontakt-Button: `mailto:goodomen@outlook.de?subject={artworkId}`
+  - Kontakt-Button: `mailto:gallerie@gallerieroy.de?subject={artworkId}`
 - [x] Ausstellungs-Eintrag: Bild (optional), Titel, Zeitraum, Ort, Link
 
 ### Design
@@ -90,7 +90,7 @@
 |---|---|
 | Datenbank | SQLite via `@payloadcms/db-sqlite` |
 | Sequence-Nummer | Auto via `beforeChange`-Hook, danach gesperrt |
-| Kontakt-E-Mail | goodomen@outlook.de |
+| Kontakt-E-Mail | gallerie@gallerieroy.de |
 | CSS | Selbst geschrieben, kein Tailwind |
 | Seitensprache | Deutsch |
 | Deployment | Debian + PM2 + Nginx |

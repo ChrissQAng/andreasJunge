@@ -17,8 +17,8 @@ export default function DatenschutzPage() {
             Verantwortlicher im Sinne der DSGVO ist:<br />
             Gundolf Roy<br />
             E-Mail:{' '}
-            <a href="mailto:goodomen@outlook.de" className="legal__link">
-              goodomen@outlook.de
+            <a href="mailto:gallerie@gallerieroy.de" className="legal__link">
+              gallerie@gallerieroy.de
             </a>
           </p>
         </section>
@@ -63,8 +63,8 @@ export default function DatenschutzPage() {
             Sie haben jederzeit das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung
             der Verarbeitung, Datenübertragbarkeit und Widerspruch. Bitte wenden Sie sich dazu
             an:{' '}
-            <a href="mailto:goodomen@outlook.de" className="legal__link">
-              goodomen@outlook.de
+            <a href="mailto:gallerie@gallerieroy.de" className="legal__link">
+              gallerie@gallerieroy.de
             </a>
           </p>
           <p>

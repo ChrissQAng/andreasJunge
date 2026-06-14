@@ -25,8 +25,8 @@ export default function ImpressumPage() {
           <h2 className="legal__subheading">Kontakt</h2>
           <p>
             E-Mail:{' '}
-            <a href="mailto:goodomen@outlook.de" className="legal__link">
-              goodomen@outlook.de
+            <a href="mailto:gallerie@gallerieroy.de" className="legal__link">
+              gallerie@gallerieroy.de
             </a>
           </p>
         </section>
