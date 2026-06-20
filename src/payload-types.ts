@@ -203,6 +203,24 @@ export interface Artwork {
    */
   sequenceNumber: number;
   image?: (number | null) | Media;
+  /**
+   * Beschreibungstext für die Detailseite. Standard: 3 Zeilen, bei Papierarbeiten: 4 Zeilen.
+   */
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -380,6 +398,7 @@ export interface ArtworksSelect<T extends boolean = true> {
   subcategory?: T;
   sequenceNumber?: T;
   image?: T;
+  description?: T;
   updatedAt?: T;
   createdAt?: T;
 }

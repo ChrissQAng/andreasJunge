@@ -1,4 +1,5 @@
 import type { CollectionConfig, FieldHook, Where } from 'payload'
+import { lexicalEditor } from '@payloadcms/richtext-lexical'
 
 const CATEGORIES = ['Tücher', 'Papierarbeiten', 'Klingenschnitte'] as const
 const SUBCATEGORIES = ['RAF', 'Auschwitz', 'Diverse'] as const
@@ -87,6 +88,15 @@ export const Artworks: CollectionConfig = {
       type: 'upload',
       relationTo: 'media',
       label: 'Bild',
+    },
+    {
+      name: 'description',
+      type: 'richText',
+      label: 'Beschreibung (Detailseite)',
+      editor: lexicalEditor(),
+      admin: {
+        description: 'Beschreibungstext für die Detailseite. Standard: 3 Zeilen, bei Papierarbeiten: 4 Zeilen.',
+      },
     },
   ],
 }
