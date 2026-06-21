@@ -1,8 +1,9 @@
 import type { GlobalConfig } from 'payload'
+import { lexicalEditor } from '@payloadcms/richtext-lexical'
 
 export const Texts: GlobalConfig = {
   slug: 'texts',
-  label: 'Texte',
+  label: 'Texts',
   access: {
     read: () => true,
     update: ({ req }) => !!req.user,
@@ -25,8 +26,9 @@ export const Texts: GlobalConfig = {
         },
         {
           name: 'content',
-          type: 'textarea',
+          type: 'richText',
           label: 'Text',
+          editor: lexicalEditor(),
           required: true,
         },
       ],

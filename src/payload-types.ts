@@ -233,7 +233,6 @@ export interface Exhibition {
   title: string;
   period: string;
   location?: string | null;
-  link?: string | null;
   image?: (number | null) | Media;
   /**
    * Bild dieser Ausstellung in die Diashow auf der Startseite integrieren
@@ -410,7 +409,6 @@ export interface ExhibitionsSelect<T extends boolean = true> {
   title?: T;
   period?: T;
   location?: T;
-  link?: T;
   image?: T;
   showInSlideshow?: T;
   updatedAt?: T;
@@ -489,7 +487,21 @@ export interface Text {
   categories?:
     | {
         title: string;
-        content: string;
+        content: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
         id?: string | null;
       }[]
     | null;

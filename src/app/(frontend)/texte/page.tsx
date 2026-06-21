@@ -41,7 +41,9 @@ export default async function TextePage({ searchParams }: Props) {
             Texte
           </a>
           <h2 className="texte__category-heading">{active.title}</h2>
-          <p className="texte__body">{active.content}</p>
+          <div className="texte__body">
+            <RichTextRenderer content={active.content as Record<string, unknown>} />
+          </div>
         </article>
       ) : categories.length > 0 ? (
         <ul className="texte__categories">
@@ -74,5 +76,24 @@ export default async function TextePage({ searchParams }: Props) {
         <p className="texte__empty">Kein Inhalt vorhanden.</p>
       )}
     </div>
+  )
+}
+
+function RichTextRenderer({ content }: { content: Record<string, unknown> }) {
+  // Lexical rich text: render top-level paragraph/heading nodes
+  const root = content as {
+    root?: { children?: Array<{ type: string; children?: Array<{ text?: string }> }> }
+  }
+  if (!root?.root?.children) return null
+
+  return (
+    <>
+      {root.root.children.map((node, i) => {
+        const text = node.children?.map((child) => child.text ?? '').join('') ?? ''
+        if (node.type === 'heading') return <h3 key={i}>{text}</h3>
+        if (node.type === 'paragraph') return <p key={i}>{text}</p>
+        return null
+      })}
+    </>
   )
 }

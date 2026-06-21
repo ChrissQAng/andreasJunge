@@ -1,4 +1,4 @@
-import type { CollectionConfig, FieldHook, Where } from 'payload'
+import type { CollectionAfterDeleteHook, CollectionConfig, FieldHook, Where } from 'payload'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 
 const CATEGORIES = ['Tücher', 'Papierarbeiten', 'Klingenschnitte'] as const
@@ -30,6 +30,25 @@ const assignSequenceNumber: FieldHook = async ({ value, operation, req, siblingD
   return (highest as number) + 1
 }
 
+// When an artwork is deleted, also delete its linked media image (incl. file on disk).
+// Errors (e.g. image already removed) are swallowed so the artwork deletion still succeeds.
+const deleteLinkedImage: CollectionAfterDeleteHook = async ({ doc, req }) => {
+  const imageId =
+    doc?.image && typeof doc.image === 'object' ? doc.image.id : doc?.image
+
+  if (!imageId) return
+
+  try {
+    await req.payload.delete({ collection: 'media', id: imageId, req })
+  } catch (error) {
+    req.payload.logger.error(
+      `Konnte verknüpftes Bild (id: ${imageId}) zu gelöschtem Artwork nicht löschen: ${
+        error instanceof Error ? error.message : String(error)
+      }`,
+    )
+  }
+}
+
 export const Artworks: CollectionConfig = {
   slug: 'artworks',
   admin: {
@@ -41,6 +60,9 @@ export const Artworks: CollectionConfig = {
     create: ({ req }) => !!req.user,
     update: ({ req }) => !!req.user,
     delete: ({ req }) => !!req.user,
+  },
+  hooks: {
+    afterDelete: [deleteLinkedImage],
   },
   fields: [
     {

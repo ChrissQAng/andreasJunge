@@ -2,7 +2,7 @@ import type { GlobalConfig } from 'payload'
 
 export const Biography: GlobalConfig = {
   slug: 'biography',
-  label: 'Biographie',
+  label: 'Biography',
   access: {
     read: () => true,
     update: ({ req }) => !!req.user,
