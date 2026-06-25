@@ -18,6 +18,7 @@ local.db-wal
 
 # build
 dist/
+tsconfig.tsbuildinfo
 
 # OS
 .DS_Store
