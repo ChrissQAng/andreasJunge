@@ -1,3 +1,5 @@
+import fs from 'fs'
+import path from 'path'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import type { Media } from '@/payload-types'
@@ -5,16 +7,28 @@ import './home.css'
 
 export const revalidate = 60
 
-const STATIC_HERO_IMAGES = [
-  { src: '/assets/images/Andreas Junge-0001C-d1feb3ce.jpg', alt: 'Andreas Junge – Werk' },
-  { src: '/assets/images/Junge6-7ef0d4e1.jpg', alt: 'Andreas Junge – Werk' },
-  { src: '/assets/images/94P093-f9f7bf02.jpg', alt: 'Andreas Junge – Werk' },
-  { src: '/assets/images/Andreas Junge-0003C-e8163eb5.jpg', alt: 'Andreas Junge – Werk' },
-  { src: '/assets/images/Andreas Junge-0047C.jpg', alt: 'Andreas Junge – Werk' },
-  { src: '/assets/images/Andreas Junge-0061C.jpg', alt: 'Andreas Junge – Werk' },
-  { src: '/assets/images/1996-0078-61555f79.jpg', alt: 'Andreas Junge – Werk' },
-  { src: '/assets/images/Junge11-c2a5af5b.jpg', alt: 'Andreas Junge – Werk' },
-]
+const HERO_IMAGE_DIR = 'public/assets/images'
+const IMAGE_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.webp', '.avif', '.gif']
+
+// Reads all hero images directly from the public folder so images can be
+// swapped by replacing files – no code change needed.
+function getStaticHeroImages(): { src: string; alt: string }[] {
+  const dir = path.join(process.cwd(), HERO_IMAGE_DIR)
+  let files: string[]
+  try {
+    files = fs.readdirSync(dir)
+  } catch {
+    return []
+  }
+
+  return files
+    .filter((file) => IMAGE_EXTENSIONS.includes(path.extname(file).toLowerCase()))
+    .sort((a, b) => a.localeCompare(b, 'de'))
+    .map((file) => ({
+      src: `/assets/images/${file}`,
+      alt: 'Andreas Junge – Werk',
+    }))
+}
 
 export default async function HomePage() {
   const payload = await getPayload({ config })
@@ -26,7 +40,7 @@ export default async function HomePage() {
   })
 
   const slideshowImages = [
-    ...STATIC_HERO_IMAGES,
+    ...getStaticHeroImages(),
     ...exhibitions
       .map((ex) => {
         const img = ex.image as Media | null
