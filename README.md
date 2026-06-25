@@ -22,6 +22,8 @@ Einmalig nach dem ersten Start Seed-Daten einspielen:
 pnpm seed
 ```
 
+> ⚠️ **`pnpm seed` nur lokal verwenden.** Das Script spielt Lorem-Ipsum-Platzhalter ein und überschreibt vorhandene Inhalte. **Niemals auf dem Produktionsserver ausführen** – dort wird die echte Datenbank per `rsync` übertragen (siehe Deployment, Schritt 4).
+
 ---
 
 ## Deployment auf Debian 13 + Apache
@@ -85,6 +87,8 @@ rsync -avz ./media/    user@server:/var/www/andreas-junge/media/
 
 > Die Diashow-Bilder unter `public/assets/images/` sind im Repo enthalten und kommen bereits per `git clone` mit.
 
+> ✅ Mit der übertragenen `local.db` sind alle echten Inhalte **und der Admin-Login** sofort vorhanden. Auf dem Server daher **kein `pnpm seed`** ausführen (das würde die echten Daten überschreiben). Auch `pnpm payload migrate` ist hier nicht nötig, da das Schema in der übertragenen DB bereits aktuell ist – nur bei einer **frisch angelegten, leeren** DB ausführen.
+
 ### 5. Umgebungsvariablen konfigurieren
 
 ```bash
@@ -108,11 +112,12 @@ PAYLOAD_SECRET=hier-den-generierten-string-einfügen
 
 ```bash
 pnpm install
-pnpm payload migrate
 pnpm build
 ```
 
 > Die `.npmrc` (mit `*libsql*`-Hoist-Pattern) ist im Repo enthalten und für den SQLite-Adapter notwendig.
+>
+> **`pnpm payload migrate` nur ausführen, wenn keine `local.db` übertragen wurde** (frische, leere Datenbank). Bei übertragener DB aus Schritt 4 entfällt dieser Befehl.
 
 ### 7. Mit PM2 starten
 
