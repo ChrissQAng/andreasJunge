@@ -41,7 +41,8 @@ async function seed() {
     slug: 'texts',
     data: {
       categories: [
-        { title: 'Beispielkategorie', content: LOREM },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        { title: 'Beispielkategorie', content: makeLexical(LOREM) as any },
       ],
     },
   })

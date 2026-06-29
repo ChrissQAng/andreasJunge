@@ -34,14 +34,6 @@ export const Exhibitions: CollectionConfig = {
       label: 'Ort',
     },
     {
-      name: 'link',
-      type: 'text',
-      label: 'Externer Link',
-      admin: {
-        placeholder: 'https://...',
-      },
-    },
-    {
       name: 'image',
       type: 'upload',
       relationTo: 'media',

@@ -14,9 +14,9 @@ export default function ImpressumPage() {
         <section className="legal__section">
           <h2 className="legal__subheading">Angaben gemäß § 5 TMG</h2>
           <p>
-            Gundolf Roy<br />
-            [Straße und Hausnummer]<br />
-            [PLZ Ort]<br />
+            Galerie Marianne Roy<br />
+            Nideggener Strasse 25<br />
+            53909 Zülpich<br />
             Deutschland
           </p>
         </section>
@@ -34,9 +34,9 @@ export default function ImpressumPage() {
         <section className="legal__section">
           <h2 className="legal__subheading">Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h2>
           <p>
-            Gundolf Roy<br />
-            [Straße und Hausnummer]<br />
-            [PLZ Ort]
+            Galerie Marianne Roy<br />
+            Nideggener Strasse 25<br />
+            53909 Zülpich
           </p>
         </section>
 

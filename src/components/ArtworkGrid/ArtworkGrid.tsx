@@ -1,17 +1,29 @@
+import Link from 'next/link'
 import type { Artwork } from '@/payload-types'
 import './ArtworkGrid.css'
 
-const CONTACT_EMAIL = 'gallerie@gallerieroy.de'
-
-function buildArtworkId(artwork: Artwork): string {
+export function buildArtworkId(artwork: Artwork): string {
   if (artwork.subcategory) {
     return `${artwork.category}/${artwork.subcategory}/${artwork.sequenceNumber}`
   }
   return `${artwork.category}/${artwork.sequenceNumber}`
 }
 
+export function buildArtworkSlug(artwork: Artwork): string {
+  // Maps category names to URL slugs
+  const categorySlug: Record<string, string> = {
+    'Tücher': 'tuecher',
+    'Papierarbeiten': 'papierarbeiten',
+    'Klingenschnitte': 'klingenschnitte',
+  }
+  const cat = categorySlug[artwork.category] ?? artwork.category.toLowerCase()
+  if (artwork.subcategory) {
+    return `/arbeiten/${cat}/${artwork.subcategory}/${artwork.sequenceNumber}`
+  }
+  return `/arbeiten/${cat}/${artwork.sequenceNumber}`
+}
+
 function ArtworkTile({ artwork }: { artwork: Artwork }) {
-  const artworkId = buildArtworkId(artwork)
   const imageUrl =
     artwork.image &&
       typeof artwork.image === 'object' &&
@@ -19,26 +31,24 @@ function ArtworkTile({ artwork }: { artwork: Artwork }) {
       ? (artwork.image as { url?: string }).url
       : null
 
-  const mailtoHref = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(artworkId)}`
+  const detailHref = buildArtworkSlug(artwork)
 
   return (
     <li className="artwork-tile">
-      <div className="artwork-tile__image-wrap" aria-hidden="true">
-        {imageUrl ? (
-          <img src={imageUrl} alt={artwork.title} className="artwork-tile__image" />
-        ) : (
-          <div className="artwork-tile__placeholder" />
-        )}
-      </div>
-      <div className="artwork-tile__info">
-        <p className="artwork-tile__caption">
-          <span className="artwork-tile__title">{artwork.title}</span>
-          <span className="artwork-tile__number">Nr. {artwork.sequenceNumber}</span>
-        </p>
-        <a href={mailtoHref} className="artwork-tile__contact" aria-label={`Kontakt zu Werk ${artworkId}`}>
-          Kontakt
-        </a>
-      </div>
+      <Link href={detailHref} className="artwork-tile__link" aria-label={artwork.title}>
+        <div className="artwork-tile__image-wrap">
+          {imageUrl ? (
+            <img src={imageUrl} alt={artwork.title} className="artwork-tile__image" />
+          ) : (
+            <div className="artwork-tile__placeholder" />
+          )}
+        </div>
+        <div className="artwork-tile__info">
+          <p className="artwork-tile__caption">
+            <span className="artwork-tile__title">{artwork.title}</span>
+          </p>
+        </div>
+      </Link>
     </li>
   )
 }
@@ -47,7 +57,6 @@ type ArtworkGridProps = {
   artworks: Artwork[]
   activeSubcategory?: string
   subcategories?: string[]
-  onSubcategoryChange?: (value: string) => void
 }
 
 export function ArtworkGrid({ artworks, activeSubcategory, subcategories }: ArtworkGridProps) {

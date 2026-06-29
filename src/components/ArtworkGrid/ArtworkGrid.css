@@ -91,6 +91,14 @@
   box-shadow: 0 0 0 var(--color-black);
 }
 
+.artwork-tile__link {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  text-decoration: none;
+  color: inherit;
+}
+
 /* Bild-Container */
 .artwork-tile__image-wrap {
   position: relative;

@@ -75,10 +75,6 @@ pnpm generate:types  # payload-types.ts neu generieren
 - `revalidate = 60` auf allen öffentlichen Seiten
 - Bilder aus Payload immer mit `depth: 1` fetchen
 
-## Arbeitsplan
+## Deployment
 
-Siehe [PLAN.md](./PLAN.md) – dort werden Checkboxen beim Abarbeiten gesetzt.
-
-## Deployment (Ziel)
-
-Debian 12 + PM2 + Nginx. Siehe Phase 5 in PLAN.md.
+Debian 13 + PM2 + Apache (Reverse Proxy). Vollständige Anleitung in [README.md](./README.md).
