@@ -1,5 +1,5 @@
 import { getPayload } from 'payload'
-import config from '@/../src/payload.config'
+import config from '@payload-config'
 import type { Exhibition } from '@/payload-types'
 import './ausstellungen.css'
 
@@ -21,7 +21,9 @@ export default async function AusstellungenPage() {
       ) : (
         <ul className="ausstellungen__list">
           {exhibitions.map((exhibition) => (
-            <ExhibitionEntry key={exhibition.id} exhibition={exhibition as Exhibition} />
+            <li key={exhibition.id}>
+              <ExhibitionEntry exhibition={exhibition as Exhibition} />
+            </li>
           ))}
         </ul>
       )}
@@ -38,16 +40,21 @@ function ExhibitionEntry({ exhibition }: { exhibition: Exhibition }) {
       : null
 
   return (
-    <li className="exhibition">
-      {imageUrl && (
-        <div className="exhibition__image-wrap">
-          <img
-            src={imageUrl}
-            alt={exhibition.title}
-            className="exhibition__image"
-          />
-        </div>
-      )}
+    <article className="exhibition">
+      <div className="exhibition__image-wrap">
+        {imageUrl ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={imageUrl} alt={exhibition.title} className="exhibition__image" />
+        ) : (
+          <div className="exhibition__image-placeholder" aria-hidden="true">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" />
+              <circle cx="8.5" cy="8.5" r="1.5" />
+              <path d="m21 15-5-5L5 21" />
+            </svg>
+          </div>
+        )}
+      </div>
       <div className="exhibition__info">
         <h2 className="exhibition__title">{exhibition.title}</h2>
         <p className="exhibition__period">{exhibition.period}</p>
@@ -61,10 +68,13 @@ function ExhibitionEntry({ exhibition }: { exhibition: Exhibition }) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Zur Ausstellung →
+            Zur Ausstellung
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M7 7h10v10M7 17 17 7" />
+            </svg>
           </a>
         )}
       </div>
-    </li>
+    </article>
   )
 }

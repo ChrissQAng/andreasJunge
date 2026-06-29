@@ -1,7 +1,7 @@
 import type { Artwork } from '@/payload-types'
 import './ArtworkGrid.css'
 
-const CONTACT_EMAIL = 'goodomen@outlook.de'
+const CONTACT_EMAIL = 'gallerie@gallerieroy.de'
 
 function buildArtworkId(artwork: Artwork): string {
   if (artwork.subcategory) {
@@ -14,8 +14,8 @@ function ArtworkTile({ artwork }: { artwork: Artwork }) {
   const artworkId = buildArtworkId(artwork)
   const imageUrl =
     artwork.image &&
-    typeof artwork.image === 'object' &&
-    'url' in artwork.image
+      typeof artwork.image === 'object' &&
+      'url' in artwork.image
       ? (artwork.image as { url?: string }).url
       : null
 

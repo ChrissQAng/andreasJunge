@@ -47,5 +47,14 @@ export const Exhibitions: CollectionConfig = {
       relationTo: 'media',
       label: 'Bild (optional)',
     },
+    {
+      name: 'showInSlideshow',
+      type: 'checkbox',
+      label: 'Bildintegration Diashow',
+      defaultValue: false,
+      admin: {
+        description: 'Bild dieser Ausstellung in die Diashow auf der Startseite integrieren',
+      },
+    },
   ],
 }

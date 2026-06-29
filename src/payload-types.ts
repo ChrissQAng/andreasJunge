@@ -217,6 +217,10 @@ export interface Exhibition {
   location?: string | null;
   link?: string | null;
   image?: (number | null) | Media;
+  /**
+   * Bild dieser Ausstellung in die Diashow auf der Startseite integrieren
+   */
+  showInSlideshow?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -389,6 +393,7 @@ export interface ExhibitionsSelect<T extends boolean = true> {
   location?: T;
   link?: T;
   image?: T;
+  showInSlideshow?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -462,21 +467,13 @@ export interface Biography {
  */
 export interface Text {
   id: number;
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
+  categories?:
+    | {
+        title: string;
+        content: string;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -495,7 +492,13 @@ export interface BiographySelect<T extends boolean = true> {
  * via the `definition` "texts_select".
  */
 export interface TextsSelect<T extends boolean = true> {
-  content?: T;
+  categories?:
+    | T
+    | {
+        title?: T;
+        content?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

@@ -37,8 +37,14 @@ async function seed() {
   await payload.updateGlobal({ slug: 'biography', data: { content: makeLexical(LOREM) as any } })
 
   console.log('Seeding texts...')
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  await payload.updateGlobal({ slug: 'texts', data: { content: makeLexical(LOREM) as any } })
+  await payload.updateGlobal({
+    slug: 'texts',
+    data: {
+      categories: [
+        { title: 'Beispielkategorie', content: LOREM },
+      ],
+    },
+  })
 
   console.log('Seeding artworks...')
 

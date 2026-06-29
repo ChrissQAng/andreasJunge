@@ -43,7 +43,7 @@ src/
 
 ## Kontakt-E-Mail
 
-`goodomen@outlook.de` – wird in `mailto:`-Links auf den Artwork-Kacheln als Betreff mit der Bild-ID vorausgefüllt.
+`gallerie@gallerieroy.de` – wird in `mailto:`-Links auf den Artwork-Kacheln als Betreff mit der Bild-ID vorausgefüllt.
 
 ## Kategorien
 

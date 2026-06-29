@@ -1,74 +1,153 @@
+/* ============================================================
+   AUSSTELLUNGEN
+   ============================================================ */
 .ausstellungen {
-  padding: var(--spacing-lg) var(--spacing-md);
+  padding-block: var(--space-16);
 }
 
 .ausstellungen__heading {
-  font-size: 1.5rem;
-  font-weight: 400;
-  margin-bottom: var(--spacing-lg);
-  letter-spacing: -0.01em;
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-12);
+  padding-bottom: var(--space-6);
+  border-bottom: var(--border);
 }
 
 .ausstellungen__empty {
-  color: var(--color-gray-500);
+  color: var(--color-gray-400);
+  font-size: 0.875rem;
 }
 
 .ausstellungen__list {
-  list-style: none;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-lg);
 }
 
+/* ============================================================
+   EXHIBITION ENTRY
+   ============================================================ */
 .exhibition {
   display: grid;
-  grid-template-columns: 240px 1fr;
-  gap: var(--spacing-md);
-  border-top: 1px solid var(--color-gray-200);
-  padding-top: var(--spacing-md);
+  grid-template-columns: 280px 1fr;
+  gap: 0;
+  border-top: var(--border);
+  transition: background-color var(--duration-fast) ease;
 }
 
+.ausstellungen__list li:last-child .exhibition {
+  border-bottom: var(--border);
+}
+
+.exhibition:hover {
+  background-color: var(--color-gray-100);
+}
+
+/* Bild-Spalte */
 .exhibition__image-wrap {
+  border-right: var(--border);
   aspect-ratio: 4 / 3;
   overflow: hidden;
-  background: var(--color-gray-100);
+  background-color: var(--color-gray-100);
+  flex-shrink: 0;
 }
 
 .exhibition__image {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform var(--duration-slow) var(--ease-out);
 }
 
+.exhibition:hover .exhibition__image {
+  transform: scale(1.04);
+}
+
+/* Kein Bild – Platzhalter */
+.exhibition__image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.exhibition__image-placeholder svg {
+  color: var(--color-gray-200);
+}
+
+/* Info-Spalte */
 .exhibition__info {
+  padding: var(--space-8);
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-xs);
+  justify-content: center;
+  gap: var(--space-2);
 }
 
 .exhibition__title {
-  font-size: 1.125rem;
-  font-weight: 400;
+  font-family: var(--font-heading);
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
 }
 
 .exhibition__period {
+  font-family: var(--font-body);
   font-size: 0.875rem;
-  color: var(--color-gray-700);
+  font-weight: 500;
+  color: var(--color-red);
+  letter-spacing: 0.02em;
 }
 
 .exhibition__location {
+  font-family: var(--font-body);
   font-size: 0.875rem;
-  color: var(--color-gray-500);
+  color: var(--color-gray-600);
 }
 
 .exhibition__link {
-  margin-top: var(--spacing-xs);
-  font-size: 0.875rem;
-  text-decoration: underline;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-black);
+  padding: var(--space-2) var(--space-4);
+  border: 2px solid var(--color-black);
+  width: fit-content;
+  transition:
+    background-color var(--duration-fast) ease,
+    color var(--duration-fast) ease;
 }
 
-@media (max-width: 600px) {
+.exhibition__link:hover {
+  background-color: var(--color-black);
+  color: var(--color-cream);
+  text-decoration: none;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 768px) {
   .exhibition {
     grid-template-columns: 1fr;
+  }
+
+  .exhibition__image-wrap {
+    border-right: none;
+    border-bottom: var(--border);
+    aspect-ratio: 16 / 9;
+  }
+
+  .exhibition__info {
+    padding: var(--space-6) var(--space-4);
   }
 }

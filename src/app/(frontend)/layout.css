@@ -1,0 +1,66 @@
+/* ============================================================
+   SITE FOOTER
+   ============================================================ */
+.site-footer {
+  border-top: var(--border);
+  background-color: var(--color-cream);
+}
+
+.site-footer__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: var(--space-6);
+  gap: var(--space-4);
+}
+
+.site-footer__contact {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  color: var(--color-gray-400);
+}
+
+.site-footer__email {
+  color: var(--color-black);
+  text-decoration: underline;
+  transition: color var(--duration-fast) ease;
+}
+
+.site-footer__email:hover {
+  color: var(--color-red);
+}
+
+/* Rechtliche Links */
+.site-footer__legal {
+  display: flex;
+  gap: var(--space-6);
+}
+
+.site-footer__legal-link {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--color-gray-400);
+  transition: color var(--duration-fast) ease;
+}
+
+.site-footer__legal-link:hover {
+  color: var(--color-black);
+  text-decoration: none;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 480px) {
+  .site-footer__inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+
+  .site-footer__legal {
+    gap: var(--space-4);
+  }
+}
