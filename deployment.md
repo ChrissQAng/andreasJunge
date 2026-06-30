@@ -209,11 +209,12 @@ PAYLOAD_SECRET=hier-den-generierten-string-einfügen
 
 ```bash
 pnpm install
-pnpm build
+pnpm run build
 ```
 
 - `pnpm install` lädt alle benötigten Programmbibliotheken herunter.
-- `pnpm build` erzeugt die optimierte Produktionsversion der Website.
+- `pnpm run build` startet das Build-Skript aus `package.json`, das in diesem
+  Projekt `next build` ausführt.
   Das kann ein bis zwei Minuten dauern.
 
 > Falls du **keine** `local.db` übertragen hast (frische, leere Datenbank), führe
@@ -324,7 +325,7 @@ cd /var/www/andreas-junge
 git pull
 pnpm install
 pnpm payload migrate      # nur falls neue Datenbank-Migrationen dazugekommen sind
-pnpm build
+pnpm run build
 pm2 restart andreas-junge
 ```
 
