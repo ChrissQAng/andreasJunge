@@ -209,16 +209,46 @@ PAYLOAD_SECRET=hier-den-generierten-string-einfügen
 
 ```bash
 pnpm install
-pnpm run build
 ```
 
 - `pnpm install` lädt alle benötigten Programmbibliotheken herunter.
-- `pnpm run build` startet das Build-Skript aus `package.json`, das in diesem
-  Projekt `next build` ausführt.
-  Das kann ein bis zwei Minuten dauern.
+
+### libsql-Symlink anlegen (wichtig!)
+
+Das native SQLite-Modul `libsql` wird von pnpm nicht in die oberste
+`node_modules`-Ebene verlinkt. Ohne diesen Schritt startet die App zwar, aber
+**jede Seite mit Datenbank-Zugriff (inkl. `/admin`) liefert Fehler 500**
+(`Cannot find module 'libsql'`). Lege deshalb den fehlenden Symlink an:
+
+```bash
+ln -sf "$(ls -d node_modules/.pnpm/libsql@*/node_modules/libsql)" node_modules/libsql
+ls -la node_modules/libsql
+```
+
+- Der erste Befehl findet das installierte `libsql` automatisch (egal welche
+  Version) und verlinkt es nach `node_modules/libsql`.
+- `ls -la` sollte einen Pfeil (`-> .pnpm/libsql@.../node_modules/libsql`) zeigen.
+
+> ⚠️ Dieser Symlink verschwindet bei jedem erneuten `pnpm install`. **Führe den
+> `ln -sf …`-Befehl nach jedem `pnpm install` erneut aus** (auch bei Updates,
+> siehe Abschnitt „Updates einspielen").
+
+### Build erstellen
+
+```bash
+pnpm exec next build
+```
+
+- `pnpm exec next build` baut die Produktionsversion. Das kann ein bis zwei
+  Minuten dauern.
+
+> 💡 In der `package.json` gibt es zwar `pnpm run build`, dieses setzt aber
+> `--max-old-space-size=8000` (8 GB RAM) und schlägt auf kleinen Servers (z. B.
+> 2 GB) fehl. `pnpm exec next build` erzeugt denselben Produktions-Build ohne
+> dieses Limit und ist deshalb hier der sichere Weg.
 
 > Falls du **keine** `local.db` übertragen hast (frische, leere Datenbank), führe
-> **vor** `pnpm build` noch `pnpm payload migrate` aus – das legt die leeren
+> **vor** dem Build noch `pnpm payload migrate` aus – das legt die leeren
 > Datenbank-Tabellen an. Bei übertragener DB (Schritt 4) ist das **nicht** nötig.
 
 ---
@@ -321,17 +351,20 @@ war – **ändere es** unter deinem Benutzerprofil.
 Wenn du am Code etwas geändert und ins Repository gepusht hast:
 
 ```bash
-cd /var/www/andreas-junge
+cd /var/www/andreas-junge/andreasJunge
 git pull
 pnpm install
+ln -sf "$(ls -d node_modules/.pnpm/libsql@*/node_modules/libsql)" node_modules/libsql
 pnpm payload migrate      # nur falls neue Datenbank-Migrationen dazugekommen sind
-pnpm run build
+pnpm exec next build
 pm2 restart andreas-junge
 ```
 
 - `git pull` holt die neuen Änderungen.
 - `pnpm install` installiert ggf. neue Bibliotheken.
-- `pnpm build` baut die Website neu.
+- Der `ln -sf …`-Befehl legt den **libsql-Symlink neu an** – `pnpm install` löscht
+  ihn jedes Mal, und ohne ihn kommt überall Fehler 500 (siehe Schritt 6).
+- `pnpm exec next build` baut die Website neu.
 - `pm2 restart` startet die App mit dem neuen Stand.
 
 ---
@@ -345,7 +378,8 @@ pm2 restart andreas-junge
 | **Login schlägt generell fehl** | `.env` prüfen – `PAYLOAD_SECRET` muss gesetzt sein. Danach `pm2 restart andreas-junge`. |
 | **Upload eines Bildes > 10 MB schlägt fehl** | Limit in `apache.conf` (`LimitRequestBody`) anheben und `sudo systemctl reload apache2`. |
 | **Hochgeladene Bilder werden nicht angezeigt** | Der Ordner `media/` fehlt auf dem Server – per `rsync` übertragen (Schritt 4). |
-| **`Cannot find module 'libsql'`** beim Build | Aufräumen und neu bauen: `rm -rf node_modules .next && pnpm install && pnpm build` |
+| **Fehler 500 auf allen DB-Seiten / `/admin`, Startseite geht** bzw. **`Cannot find module 'libsql'`** in den Logs | Der libsql-Symlink fehlt (z. B. nach `pnpm install`). Neu anlegen: `ln -sf "$(ls -d node_modules/.pnpm/libsql@*/node_modules/libsql)" node_modules/libsql` und `pm2 restart andreas-junge` (siehe Schritt 6). |
+| **Build bricht mit `exit code 1` sofort ab (kein „Compiled successfully")** | `pnpm run build` setzt `--max-old-space-size=8000` (8 GB) → auf kleinen Servern zu viel. Stattdessen `pnpm exec next build` verwenden. |
 | **Apache startet nicht / Fehler beim Reload** | `sudo apache2ctl configtest` zeigt die fehlerhafte Zeile an. |
 | **Website nicht erreichbar, aber `pm2 status` = online** | Firewall prüfen (`sudo ufw status` → 'WWW Full' erlaubt?) und DNS-Eintrag der Domain auf die Server-IP kontrollieren. |
 
